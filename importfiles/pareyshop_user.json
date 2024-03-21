@@ -1,5 +1,4 @@
-{
-"select wu.ID, wu.user_email, wgug.group_id  from wp_users wu left join wp_groups_user_group wgug on wu.ID = wgug.user_id where wgug.group_id = 2": [
+[
 	{
 		"ID" : 1,
 		"user_email" : "nico.garthe@paulparey.de",
@@ -127824,5 +127823,10 @@
 		"ID" : 43900,
 		"user_email" : "ieskeyzer@gmail.com",
 		"group_id" : 2
+	},
+	{
+		"ID" : 43904,
+		"user_email" : "patrick.spoden@gmail.com",
+		"group_id" : 2
 	}
-]}
+]

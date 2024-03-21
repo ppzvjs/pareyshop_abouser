@@ -16,34 +16,38 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class AbocheckerCommand extends Command
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-        ;
-    }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
+        $io->title('Abochecker');
+        $shopFile = $io->ask('Pfad für die WP-User Json','/opt/importfiles/pareyshop_user.json');
+        $vzmagaFile = $io->ask('Pfad für die VZMAGA-User Json','/opt/importfiles/vzmaga_user.json');
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
+        $shopUsers = json_decode(file_get_contents($shopFile),true);
+        $vzmagaUsers = json_decode(file_get_contents($vzmagaFile),true);
+        $counterFound = 0;
+        $counterNotFound = 0;
+        foreach($shopUsers as $key => $user){
+                $io->text('(' . $key . '/' . count($shopUsers) . ') Checking user ' . $user['user_email']);
+
+                $found = false;
+                foreach($vzmagaUsers as $vzmagaUser){
+                    if($vzmagaUser['EMAIL'] === $user['user_email']){
+                        $found = true;
+                        break;
+                    }
+                }
+                if(!$found){
+                    //$io->error('User ' . $user['user_email'] . ' nicht in VZMAGA gefunden');
+                    $counterNotFound++;
+                }else{
+                    //$io->success('User ' . $user['user_email'] . ' gefunden');
+                    $counterFound++;
+                }
         }
-
-        if ($input->getOption('option1')) {
-            // ...
-        }
-
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
-
+        $io->text('Gefunden: ' . $counterFound);
+        $io->text('Nicht gefunden: ' . $counterNotFound);
         return Command::SUCCESS;
     }
 }

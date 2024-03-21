@@ -21,6 +21,7 @@ services:
       # Uncomment for Development
     volumes:
       - ./src:/var/www/html:delegated
+      - ./importfiles:/opt/importfiles
   composer:
     build:
       context: ./dockerfiles
@@ -33,6 +34,7 @@ services:
       dockerfile: dockerfiles/php.dockerfile
     volumes:
       - ./src:/var/www/html
+      - ./importfiles:/opt/importfiles
     entrypoint: [ 'php', '/var/www/html/bin/console' ]
   db:
     image: mariadb

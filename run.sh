@@ -2,6 +2,6 @@
 
 docker compose down --remove-orphans
 docker compose build
-docker compose up -d server
+docker compose --env-file .env.local up -d server
 
 echo "Success!"

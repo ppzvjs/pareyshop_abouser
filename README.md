@@ -1,4 +1,4 @@
-# Installation Api
+# Installation Pareyshop Abo bereinigen
 ## SSL Zertifikate
 ```bash
 openssl req -x509 -out nginx/ssl/localhost.crt -keyout nginx/ssl/localhost.key \

@@ -10,6 +10,7 @@ services:
       # Uncomment for Development
     volumes:
       - ./src:/var/www/html
+      - ./importfiles:/opt/importfiles
     depends_on:
       - php
       - db
